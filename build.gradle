@@ -1,0 +1,44 @@
+group = "io.github.robhinds"
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "3.5"
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "gradle.plugin.com.github.maiflai:gradle-scalatest:0.15"
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.0"
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repository.apache.org/content/repositories/snapshots" }
+}
+
+apply {
+    plugin "scala"
+    plugin "com.github.maiflai.scalatest"
+    plugin "com.github.johnrengelman.shadow"
+}
+
+dependencies {
+    compile "org.scala-lang:scala-library:2.11.8"	
+    compile "org.apache.opennlp:opennlp-tools:1.6.1-SNAPSHOT"
+    compile "io.circe:circe-core:0.8.0"
+    compile "io.circe:circe-generic:0.8.0"
+    compile "io.circe:circe-parse:0.8.0"
+	
+	shadow "com.amazonaws:aws-lambda-java-core:1.1.0"
+    shadow "com.amazonaws:aws-lambda-java-events:1.1.0"
+	
+	testCompile 'org.scalatest:scalatest_2.11:3.0.0'
+	testRuntime 'org.pegdown:pegdown:1.6.0'
+}
+
+configurations {
+    runtime.exclude module: 'storm-core'
+}
