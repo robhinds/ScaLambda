@@ -31,9 +31,9 @@ apply {
 dependencies {
     compile "org.scala-lang:scala-library:2.11.8"	
     compile "org.apache.opennlp:opennlp-tools:1.6.1-SNAPSHOT"
-    compile "io.circe:circe-core:0.8.0"
-    compile "io.circe:circe-generic:0.8.0"
-    compile "io.circe:circe-parse:0.8.0"
+    compile "io.circe:circe-core_2.11:0.8.0"
+    compile "io.circe:circe-generic_2.11:0.8.0"
+    compile "io.circe:circe-parser_2.11:0.8.0"
 	
 	shadow "com.amazonaws:aws-lambda-java-core:1.1.0"
     shadow "com.amazonaws:aws-lambda-java-events:1.1.0"
