@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/robhinds/aws-lambda-api.png)](https://travis-ci.org/robhinds/aws-lambda-api)
+
+
 # AWS Lambda Web Support
 
 Some boilerplate machinery to support AWS lambda endpoints written in Scala.
