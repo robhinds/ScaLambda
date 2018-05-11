@@ -48,8 +48,8 @@ dependencies {
 
     testCompile "com.amazonaws:aws-lambda-java-core:$awsVersion"
     testCompile "com.amazonaws:aws-lambda-java-events:$awsVersion"
-	testCompile 'org.scalatest:scalatest_$scalaPrefix:3.0.0'
-	testRuntime 'org.pegdown:pegdown:1.6.0'
+	testCompile "org.scalatest:scalatest_$scalaPrefix:3.0.0"
+	testRuntime "org.pegdown:pegdown:1.6.0"
 }
 
 configurations {

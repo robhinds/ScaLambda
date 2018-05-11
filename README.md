@@ -15,8 +15,10 @@ For example:
 ```
   case class TestInput(value: String)
   case class TestOutput(value: String)
+  
   class TestRoute extends Controller[TestInput, TestOutput] with DefaultExceptionHandler {
-    override def handleRequest(in: TestInput): ApiResponse[TestOutput] = success(TestOutput(s"OUTPUT:${in.value}"))
+    override def handleRequest(in: TestInput): ApiResponse[TestOutput] = 
+        success(TestOutput(s"OUTPUT:${in.value}"))
   }
 ```
 
