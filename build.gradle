@@ -1,7 +1,14 @@
 group = "io.github.robhinds"
+version = "1.0.0-SNAPSHOT"
 
 task wrapper(type: Wrapper) {
     gradleVersion = "3.5"
+}
+
+ext {
+    scalaPrefix = '2.11'
+    awsVersion = '1.1.0'
+    circeVersion = '0.8.0'
 }
 
 buildscript {
@@ -19,7 +26,6 @@ buildscript {
 
 repositories {
     mavenCentral()
-    maven { url "https://repository.apache.org/content/repositories/snapshots" }
 }
 
 apply {
@@ -29,20 +35,20 @@ apply {
 }
 
 dependencies {
-    compile "org.scala-lang:scala-library:2.11.8"
-    compile "io.circe:circe-core_2.11:0.8.0"
-    compile "io.circe:circe-generic_2.11:0.8.0"
-    compile "io.circe:circe-parser_2.11:0.8.0"
+    compile "org.scala-lang:scala-library:$scalaPrefix.8"
+    compile "io.circe:circe-core_$scalaPrefix:$circeVersion"
+    compile "io.circe:circe-generic_$scalaPrefix:$circeVersion"
+    compile "io.circe:circe-parser_$scalaPrefix:$circeVersion"
     compile "ch.qos.logback:logback-classic:1.1.2"
-    compile "com.typesafe.scala-logging:scala-logging_2.11:3.4.0"
+    compile "com.typesafe.scala-logging:scala-logging_$scalaPrefix:3.4.0"
     compile "com.typesafe:config:1.3.2"
 	
-	shadow "com.amazonaws:aws-lambda-java-core:1.1.0"
-    shadow "com.amazonaws:aws-lambda-java-events:1.1.0"
+	shadow "com.amazonaws:aws-lambda-java-core:$awsVersion"
+    shadow "com.amazonaws:aws-lambda-java-events:$awsVersion"
 
-    testCompile "com.amazonaws:aws-lambda-java-core:1.1.0"
-    testCompile "com.amazonaws:aws-lambda-java-events:1.1.0"
-	testCompile 'org.scalatest:scalatest_2.11:3.0.0'
+    testCompile "com.amazonaws:aws-lambda-java-core:$awsVersion"
+    testCompile "com.amazonaws:aws-lambda-java-events:$awsVersion"
+	testCompile 'org.scalatest:scalatest_$scalaPrefix:3.0.0'
 	testRuntime 'org.pegdown:pegdown:1.6.0'
 }
 
