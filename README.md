@@ -24,3 +24,19 @@ For example:
 
 This can easily be deployed to AWS (we recommend the [Serverless framework](https://serverless.com/))
 
+
+### Getting started
+
+Grab the JAR from bintray, add the following code to your gradle configuration
+
+```
+repositories {
+    maven {
+        url  "https://dl.bintray.com/robhinds/snapshots" 
+    }
+}
+
+dependencies {
+    compile 'io.github.robhinds:ScaLambda:0.0.1'
+}
+```
