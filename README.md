@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/robhinds/aws-lambda-api.png)](https://travis-ci.org/robhinds/aws-lambda-api)
+[![Build Status](https://travis-ci.org/robhinds/ScaLambda.png)](https://travis-ci.org/robhinds/ScaLambda)
 
 
 # ScaLambda
