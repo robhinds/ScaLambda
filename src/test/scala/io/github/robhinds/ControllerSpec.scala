@@ -13,10 +13,10 @@ class ControllerSpec extends FunSpec with Matchers {
 
   case class TestInput(value: String)
   case class TestOutput(value: String)
-  class TestRoute extends Controller[TestInput, TestOutput] with DefaultExceptionHandler {
+  class TestRoute extends Controller[TestInput, TestOutput] with DefaultResponseSerializerComponent with DefaultExceptionHandler {
     override def handleRequest(in: TestInput): ApiResponse[TestOutput] = success(TestOutput(s"OUTPUT:${in.value}"))
   }
-  class ErrorRoute extends Controller[TestInput, TestOutput] with DefaultExceptionHandler {
+  class ErrorRoute extends Controller[TestInput, TestOutput] with DefaultResponseSerializerComponent with DefaultExceptionHandler {
     override def handleRequest(s: TestInput): ApiResponse[TestOutput] = failure[TestOutput](new Exception("failure"))
   }
 
@@ -28,7 +28,7 @@ class ControllerSpec extends FunSpec with Matchers {
       val input = TestInput("test input")
       val os = new ByteArrayOutputStream()
       api.handleRequest(asIs(input.asJson.spaces2), os, null)
-      os.toString("UTF-8") shouldBe "{\n  \"value\" : \"OUTPUT:test input\"\n}"
+      os.toString("UTF-8") shouldBe "{\n  \"status\" : \"200\",\n  \"data\" : {\n    \"value\" : \"OUTPUT:test input\"\n  }\n}"
     }
   }
 

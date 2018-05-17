@@ -6,20 +6,22 @@ import java.nio.charset.StandardCharsets._
 import com.amazonaws.services.lambda.runtime.{Context, RequestStreamHandler}
 import io.circe.{Decoder, Encoder, Error, Json}
 import io.circe.parser._
-import io.github.robhinds.Domain.ApiResponse
+import io.github.robhinds.Domain.{ApiResponse, ErrorResponse}
 
 import scala.io.Source
 
 abstract class Controller[A: Decoder, B: Encoder] extends RequestStreamHandler with LoggingConfig {
-  self: ExceptionHandlerComponent =>
+  self: ResponseSerializerComponent with ExceptionHandlerComponent =>
 
   def handleRequest(in: InputStream, out: OutputStream, c: Context): Unit = {
     logDebug("Message received")
-    handleResponse(
-      handleException(
-        fromJson(in).fold(l=> Left(l), { r =>
-          handleRequest(r)
-        })
+    writeResponse(
+      serializeResponse(
+        handleException(
+          fromJson(in).fold(l=> Left(l), { r =>
+            handleRequest(r)
+          })
+        )
       ), out
     )
   }
@@ -28,12 +30,14 @@ abstract class Controller[A: Decoder, B: Encoder] extends RequestStreamHandler w
     decode[A](Source.fromInputStream(in).mkString(""))
   }
 
-  private def handleResponse(j: Json, out: OutputStream): Unit = {
+  private def writeResponse(j: Json, out: OutputStream): Unit = {
     logDebug(s"Sending response: $j")
     out.write(j.toString.getBytes(UTF_8))
   }
 
-  private def handleException(r: ApiResponse[B]): Json = exceptionHandler.handle(r)
+  private def serializeResponse(r: Either[ErrorResponse, B]): Json = responseSerializer.serialiseResponse(r)
+
+  private def handleException(r: ApiResponse[B]): Either[ErrorResponse, B] = exceptionHandler.handle(r)
 
   /**
     * Method to be implemented by the AWS Lambda endpoint. It expects an argument of type A
